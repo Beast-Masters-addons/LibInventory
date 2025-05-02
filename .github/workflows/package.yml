@@ -29,6 +29,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Get build utils
         uses: actions/checkout@v4
@@ -39,7 +41,7 @@ jobs:
       - name: Install lua dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install luarocks
+          sudo apt-get -y install luarocks subversion
           sudo luarocks install luaunit
           sudo luarocks install luacov
           sudo luarocks install luacheck
@@ -48,7 +50,7 @@ jobs:
         run: luacheck addon --no-self --no-unused
 
       - name: Build the addon
-        uses: BigWigsMods/packager@v2.3.1
+        uses: BigWigsMods/packager@v2.4.2
         with:
           args: -g ${{ matrix.game_version }} -z -d
 
@@ -92,7 +94,7 @@ jobs:
         run: git rm -rf tests
 
       - name: WoW Packager
-        uses: BigWigsMods/packager@v2.3.1
+        uses: BigWigsMods/packager@v2.4.2
 
       - uses: actions/upload-artifact@v4
         with:
