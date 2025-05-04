@@ -5,14 +5,10 @@ local mail = _G['LibInventoryAce']:NewModule('LibInventoryMail', 'AceEvent-3.0')
 local character_utils = _G.LibStub('BM-utils-2'):GetModule('BMUtilsCharacterInfo')
 ---@type BMUtilsText
 local text_utils = _G.LibStub('BM-utils-2'):GetModule('BMUtilsText')
----@type BMUtilsContainer
-local container_polyfill = _G.LibStub('BM-utils-2'):GetModule('BMUtilsContainer')
 
 mail.mail_open = false
 mail.attachment_key = 1
 mail.items = {}
-
-local PickupContainerItem = _G.PickupContainerItem or _G.C_Container.PickupContainerItem
 
 ---Set mail recipient
 ---@param recipient string Mail recipient
@@ -51,12 +47,12 @@ end
 ---@param key number The index of the item (1-ATTACHMENTS_MAX_SEND(12))
 function mail:AddAttachment(bag, slot, key)
     --@debug@
-    local itemInfo = container_polyfill.GetContainerItemInfo(bag, slot)
+    local itemInfo = _G.C_Container.GetContainerItemInfo(bag, slot)
     text_utils.cprint(('Attach item %s from container %d slot %d to %d'):format(
             itemInfo['hyperlink'], bag, slot, self.attachment_key), 1, 1, 0)
     --@end-debug@
     --https://warcraft.wiki.gg/wiki/API_PickupContainerItem
-    PickupContainerItem(bag, slot)
+    _G.C_Container.PickupContainerItem(bag, slot)
     _G.ClickSendMailItemButton(key or self.attachment_key)
     self.attachment_key = self.attachment_key + 1
 end
@@ -131,7 +127,7 @@ function mail:attachments(attachments, positions)
             print(('Attach itemID %s as attachment %d from container %d slot %d'):format(
                     itemID, key, position["bag"], position["slot"]))
             --@end-debug@
-            PickupContainerItem(position["bag"], position["slot"])
+            _G.C_Container.PickupContainerItem(position["bag"], position["slot"])
             _G.ClickSendMailItemButton(key)
         end
     end
