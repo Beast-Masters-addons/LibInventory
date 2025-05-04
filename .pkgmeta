@@ -9,7 +9,8 @@ externals:
     url: https://github.com/Beast-Masters-addons/BM-utils.git
     branch: ace_addon
   libs/LibProfessions:
-    url: https://github.com/datagutten/wow-LibProfessions.git
+    url: https://github.com/Beast-Masters-addons/LibProfessions.git
+    tag: v0.15
 
 ignore:
   - libs/LibStub/tests
