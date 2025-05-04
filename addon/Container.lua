@@ -9,13 +9,7 @@ local basic = _G.LibStub('BM-utils-2'):GetModule('BMUtilsBasic')
 local utils = _G.LibStub('BM-utils-2'):GetModule('BMUtils')
 
 ---@type C_Container
-local C_Container
-if _G.C_Container == nil or _G.C_Container.GetContainerNumSlots == nil then
-    ---@type BMUtilsContainer
-    C_Container = _G.LibStub('BM-utils-2'):GetModule('BMUtilsContainer')
-else
-    C_Container = _G.C_Container
-end
+local C_Container = _G.C_Container
 
 function lib:OnEnable()
     --Bank scanning
