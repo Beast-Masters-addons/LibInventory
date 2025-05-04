@@ -4,7 +4,7 @@ local addon = _G['LibInventoryAce']
 ---@class LibInventorySkills
 local lib = _G['LibInventoryAce']:NewModule('LibInventorySkills', 'AceEvent-3.0')
 
----@type LibProfessionsCommon
+---@type LibProfessions:LibProfessionsCommon
 local professions = _G.LibStub('LibProfessions-0')
 local profession = professions.currentProfession
 ---@type BMUtilsTable
@@ -19,6 +19,9 @@ function lib:OnInitialize()
     self.db_global = _G['LibInventoryDB']['namespaces']['Skills']['char']
     _G['SkillDB'] = self.db_global
     self:saveSkills()
+    if not self.db.char['skillLevel'] then
+        self.db.char['skillLevel'] = {}
+    end
 end
 
 function lib:OnEnable()
@@ -81,7 +84,14 @@ function lib:CONSOLE_MESSAGE(_, message, colorType)
     if not skill then
         return
     end
-    print(('Console message: Skill %d increased to %d'):format(skill, to))
+    --print(('Console message: Skill %d increased to %d'):format(skill, to))
+    self.db.char['skillLevel'][tonumber(skill)] = tonumber(to)
+end
+
+--/dump LibInventoryAce:GetModule('LibInventorySkills'):getSkill("Herbalism")
+function lib:getSkill(skillName)
+    local skillLineId = professions.getSkillLineID(skillName)
+    return self.db.char['skillLevel'][skillLineId]
 end
 
 function lib:saveSkills()
@@ -130,6 +140,7 @@ function lib:getSkills(category)
     return skills
 end
 
+--/dump LibInventoryAce:GetModule('LibInventorySkills'):getCharacterSkills()
 function lib:getCharacterSkills(character, realmKey)
     local character_temp, charKey
     if not character then
