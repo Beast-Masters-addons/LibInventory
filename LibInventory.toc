@@ -8,7 +8,7 @@
 ## Notes: Find items in bags, bank and mail and send them as mail attachments
 ## X-Curse-Project-ID: 344823
 ## X-Wago-ID: xZKxl3Kk
-## OptionalDeps: LibStub
+## OptionalDeps: LibStub, BM-utils, LibProfessions
 ## SavedVariables: LibInventoryDB
 
 #@no-lib-strip@
