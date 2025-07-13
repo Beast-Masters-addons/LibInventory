@@ -50,7 +50,7 @@ jobs:
         run: luacheck addon --no-self --no-unused
 
       - name: Build the addon
-        uses: BigWigsMods/packager@v2.4.2
+        uses: BigWigsMods/packager@v2.4.3
         with:
           args: -g ${{ matrix.game_version }} -z -d
 
@@ -72,7 +72,7 @@ jobs:
           GAME_VERSION: ${{ matrix.game_version }}
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -94,7 +94,7 @@ jobs:
         run: git rm -rf tests
 
       - name: WoW Packager
-        uses: BigWigsMods/packager@v2.4.2
+        uses: BigWigsMods/packager@v2.4.3
 
       - uses: actions/upload-artifact@v4
         with:
