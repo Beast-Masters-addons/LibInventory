@@ -1,0 +1,9 @@
+[submodule "tests/IntelliJ-IDEA-Lua-IDE-WoW-API"]
+	path = tests/IntelliJ-IDEA-Lua-IDE-WoW-API
+	url = https://github.com/Ellypse/IntelliJ-IDEA-Lua-IDE-WoW-API
+[submodule "tests/wow-ui-source"]
+	path = tests/wow-ui-source
+	url = http://github.com/Gethe/wow-ui-source
+[submodule "build/build_utils"]
+	path = build/build_utils
+	url = https://github.com/Beast-Masters-addons/build_utils/
