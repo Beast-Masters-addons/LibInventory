@@ -1,18 +1,14 @@
-## Interface: 100005
-## Interface-Classic: 11403
-## Interface-Wrath: 30401
+## Interface: 110200, 50500, 40402, 30300, 11507
 ## Version: @project-version@
 ## Author: datagutten
 ## Title: Lib: Inventory
 ## Notes: Find items in bags, bank and mail and send them as mail attachments
 ## X-Curse-Project-ID: 344823
 ## X-Wago-ID: xZKxl3Kk
-## OptionalDeps: LibStub
-## SavedVariables: ItemLocations, LocationItems, Characters
-## SavedVariablesPerCharacter: ContainerSlot
+## OptionalDeps: LibStub, BM-utils, LibProfessions
+## SavedVariables: LibInventoryDB
 
 #@no-lib-strip@
-libs\LibStub\LibStub.lua
-libs\BM-utils\lib.xml
+dependencies.xml
 #@end-no-lib-strip@
 lib.xml

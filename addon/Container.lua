@@ -1,30 +1,85 @@
----@type LibInventory
-local _, addon = ...
-if not addon.container then
-    return
-end
-
 ---@class LibInventoryContainer
-local lib = addon.container
-lib.addon = addon
+local lib = _G['LibInventoryAce']:NewModule('LibInventoryContainer', 'AceEvent-3.0')
+---@type LibInventoryLocations
+local inventory = _G['LibInventoryAce']:GetModule('LibInventoryLocations')
 
----Container items with slot numbers
-lib.items = {}
+---@type BMUtilsBasic
+local basic = _G.LibStub('BMUtilsBasic')
+---@type BMUtils
+local utils = _G.LibStub('BMUtils')
 
-local C_Container
-if _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC then
-    C_Container = addon.utils.container
-else
-    C_Container = _G.C_Container
+---@type C_Container
+local C_Container = _G.C_Container
+
+function lib:OnEnable()
+    --Bank scanning
+    self:RegisterEvent('BANKFRAME_OPENED')
+    self:RegisterEvent('BANKFRAME_CLOSED')
+    self:RegisterEvent('PLAYERBANKSLOTS_CHANGED')
+    if _G['REAGENTBANK_CONTAINER'] ~= nil then
+        self:RegisterEvent('PLAYERREAGENTBANKSLOTS_CHANGED')
+    end
+
+    --Bag scanning
+    self:RegisterEvent('BAG_UPDATE')
+    self:RegisterEvent('PLAYER_REGEN_DISABLED')
+    self:RegisterEvent('PLAYER_REGEN_ENABLED')
 end
 
----Scan bag content and save to self.location (indexed by itemID) and self.items (indexed by container and slot)
----@param container number Container ID
----/dump LibInventory.container:getContainerItems(1)
-function lib:getContainerItems(container)
-    local slots = C_Container.GetContainerNumSlots(container)
+function lib:BANKFRAME_OPENED()
+    self.atBank = true
+    self:scanBank()
+end
 
-    self.items[container] = {}
+function lib:BANKFRAME_CLOSED()
+    if self.atBank then
+        self.atBank = false
+    end
+end
+
+---Fired when a bags inventory changes.
+---https://wow.gamepedia.com/BAG_UPDATE
+function lib:BAG_UPDATE(_, bag)
+    --@debug@
+    basic.printf('Bag %d updated, scan all bags', bag)
+    --@end-debug@
+
+    self:scanBags()
+    --self:scanContainers(bag, bag, 'bags')
+    if self.atBank then
+        self:scanBank()
+    end
+end
+
+function lib:PLAYER_REGEN_DISABLED()
+    --Do not scan bags in combat, every hunter ammo usage is a bag update
+    self:UnregisterEvent('BAG_UPDATE')
+end
+
+function lib:PLAYER_REGEN_ENABLED()
+    self:RegisterEvent('BAG_UPDATE')
+    self:scanBags() --Scan for items used in combat
+end
+
+function lib:PLAYERBANKSLOTS_CHANGED(slot)
+    --@debug@
+    basic.printf('Bank slot %d changed', slot)
+    --@end-debug@
+    self:scanBank()
+end
+
+function lib:PLAYERREAGENTBANKSLOTS_CHANGED(slot)
+    --@debug@
+    basic.printf('Reagent Bank slot %d changed', slot)
+    --@end-debug@
+    self:scanBank()
+end
+
+---Get items in the given container
+---@param container number Container ID
+function lib.getContainerItems(container)
+    local slots = C_Container.GetContainerNumSlots(container)
+    local items = {}
 
     for slot = 1, slots, 1 do
         local item = C_Container.GetContainerItemInfo(container, slot)
@@ -39,66 +94,51 @@ function lib:getContainerItems(container)
                 --@debug@
                 print(('Item in container %d slot %d has no itemID'):format(container, slots))
                 --@end-debug@
-                item['itemID'] = addon.utils.itemIdFromLink(item['hyperlink'])
+                item['itemID'] = utils.itemIdFromLink(item['hyperlink'])
             end
-            self.addon.main.subTableCheck(self.items, container, slot, item['itemID'])
-            self.items[container][slot][item['itemID']] = item['stackCount']
-            self.addon.main.subTableCheck(_G['ContainerSlot'], container, item['itemID'])
-            table.insert(_G['ContainerSlot'][container][item['itemID']], slot)
+
+            items[slot] = item
         end
     end
-    return self.items[container]
+    return items
 end
 
+---Summarize multiple item stacks
 function lib:getMultiContainerItems(first, last)
     local itemCount = {}
+    local itemLocations = {}
     for container = first, last, 1 do
-        local items = self:getContainerItems(container)
-        for _, idCount in pairs(items) do
-            for itemID, count in pairs(idCount) do
-                itemCount[itemID] = count + (itemCount[itemID] or 0)
+        local items = self.getContainerItems(container)
+        for slot, item in pairs(items) do
+            itemCount[item['itemID']] = item['stackCount'] + (itemCount[item['itemID']] or 0)
+            if itemLocations[item['itemID']] == nil then
+                itemLocations[item['itemID']] = {}
             end
+            table.insert(itemLocations[item['itemID']], { container = container, slot = slot })
         end
     end
-    return itemCount
+    return itemCount, itemLocations
 end
 
 function lib:scanContainers(first, last, location)
     for itemID, count in pairs(self:getMultiContainerItems(first, last)) do
-        self.addon.main:saveItemLocation(itemID, location, count)
+        inventory:saveItemLocation(itemID, location, count)
     end
 end
 
 function lib:scanBags()
-    self.addon.main:clearLocation('bags')
+    inventory:clearLocation('bags')
     self:scanContainers(0, 4, 'bags')
 end
 
 function lib:scanBank()
-    self.addon.main:clearLocation('bank')
+    inventory:clearLocation('bank')
     --First bank bag slot is last character bag slot +1
     self:scanContainers(_G.NUM_BAG_SLOTS + 1, _G.NUM_BANKBAGSLOTS + _G.NUM_BAG_SLOTS, 'bank')
     self:scanContainers(_G.BANK_CONTAINER, _G.BANK_CONTAINER, 'bank')
 
     if _G['REAGENTBANK_CONTAINER'] ~= nil then
-        self.addon.main:clearLocation('reagentBank')
+        inventory:clearLocation('reagentBank')
         self:scanContainers(_G['REAGENTBANK_CONTAINER'], _G['REAGENTBANK_CONTAINER'], 'reagentBank')
     end
-end
-
---/dump _G['LibInventory-@project-version@'].container:getLocation(6948)
---/dump _G['LibInventory-@project-version@'].container:getLocation(13444)
----Get item container slots
-function lib:getLocation(itemID)
-    local locations = {}
-    for container, items in pairs(_G['ContainerSlot']) do
-        for item, slots in pairs(items) do
-            if item == itemID then
-                for _, slot in ipairs(slots) do
-                    table.insert(locations, { container = container, slot = slot })
-                end
-            end
-        end
-    end
-    return locations
 end

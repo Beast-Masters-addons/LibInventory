@@ -1,13 +1,16 @@
 <Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/"
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
-    <Script file="addon\common.lua"/>
-    <Script file="addon\CharacterData.lua"/>
+    <Script file="addon\core.lua"/>
+    <Script file="addon\CharacterObject.lua"/>
     <Script file="addon\character.lua"/>
+    <Script file="addon\currency.lua"/>
     <Script file="addon\Inventory.lua"/>
     <Script file="addon\Container.lua"/>
     <Script file="addon\mail.lua"/>
     <Script file="addon\MailInventory.lua"/>
     <Script file="addon\Bank.lua"/>
     <Script file="addon\Equipment.lua"/>
-    <Script file="addon\events.lua"/>
+    <Script file="addon\Skills.lua"/>
+    <Script file="addon\SkillList.lua"/>
+    <Script file="addon\slash.lua"/>
 </Ui>
