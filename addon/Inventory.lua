@@ -5,9 +5,9 @@ local addon = _G['LibInventoryAce']
 local lib = _G['LibInventoryAce']:NewModule("LibInventoryLocations")
 
 ---@type BMUtilsBasic
-local basic = _G.LibStub('BM-utils-2'):GetModule('BMUtilsBasic')
+local basic = _G.LibStub('BMUtilsBasic')
 ---@type BMUtilsCharacterInfo
-local character_utils = _G.LibStub('BM-utils-2'):GetModule('BMUtilsCharacterInfo')
+local character_utils = _G.LibStub('BMUtilsCharacterInfo')
 
 lib.location_names = {
     guildBank = _G.GUILD_BANK,

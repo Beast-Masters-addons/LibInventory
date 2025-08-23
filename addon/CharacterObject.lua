@@ -2,7 +2,7 @@
 local lib = _G['LibInventoryAce']:NewModule("LibInventoryCharacterObject")
 
 ---@type BMUtilsCharacterInfo
-local character_utils = _G.LibStub('BM-utils-2'):GetModule('BMUtilsCharacterInfo')
+local character_utils = _G.LibStub('BMUtilsCharacterInfo')
 
 ---Construct the object with data
 ---@return LibInventoryCharacterObject

@@ -2,9 +2,9 @@
 local mail = _G['LibInventoryAce']:NewModule('LibInventoryMail', 'AceEvent-3.0')
 
 ---@type BMUtilsCharacterInfo
-local character_utils = _G.LibStub('BM-utils-2'):GetModule('BMUtilsCharacterInfo')
+local character_utils = _G.LibStub('BMUtilsCharacterInfo')
 ---@type BMUtilsText
-local text_utils = _G.LibStub('BM-utils-2'):GetModule('BMUtilsText')
+local text_utils = _G.LibStub('BMUtilsText')
 
 mail.mail_open = false
 mail.attachment_key = 1

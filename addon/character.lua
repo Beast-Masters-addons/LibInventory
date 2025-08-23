@@ -11,9 +11,9 @@ end
 local CharacterObject = addon:GetModule('LibInventoryCharacterObject')
 
 ---@type BMUtilsBasic
-local basic = _G.LibStub('BM-utils-2'):GetModule('BMUtilsBasic')
+local basic = _G.LibStub('BMUtilsBasic')
 ---@type BMUtilsText
-local text = _G.LibStub('BM-utils-2'):GetModule('BMUtilsText')
+local text = _G.LibStub('BMUtilsText')
 
 function lib:OnInitialize()
     self.db = addon.db:RegisterNamespace('Character', {})

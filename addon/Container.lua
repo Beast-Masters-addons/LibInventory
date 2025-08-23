@@ -4,9 +4,9 @@ local lib = _G['LibInventoryAce']:NewModule('LibInventoryContainer', 'AceEvent-3
 local inventory = _G['LibInventoryAce']:GetModule('LibInventoryLocations')
 
 ---@type BMUtilsBasic
-local basic = _G.LibStub('BM-utils-2'):GetModule('BMUtilsBasic')
+local basic = _G.LibStub('BMUtilsBasic')
 ---@type BMUtils
-local utils = _G.LibStub('BM-utils-2'):GetModule('BMUtils')
+local utils = _G.LibStub('BMUtils')
 
 ---@type C_Container
 local C_Container = _G.C_Container

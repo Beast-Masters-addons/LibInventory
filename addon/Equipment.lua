@@ -5,7 +5,7 @@ local addon = _G['LibInventoryAce']
 local lib = addon:NewModule('LibInventoryEquipment', 'AceEvent-3.0')
 
 ---@type BMUtils
-local utils = _G.LibStub('BM-utils-2'):GetModule('BMUtils')
+local utils = _G.LibStub('BMUtils')
 
 ---@type LibInventoryLocations
 local inventory = addon:GetModule('LibInventoryLocations')

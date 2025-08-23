@@ -8,7 +8,7 @@ local lib = addon:NewModule('LibInventoryBank', 'AceEvent-3.0')
 local inventory = addon:GetModule('LibInventoryLocations')
 
 ---@type BMUtils
-local utils = _G.LibStub('BM-utils-2'):GetModule('BMUtils')
+local utils = _G.LibStub('BMUtils')
 
 function lib:OnEnable()
     if _G['CanGuildBankRepair'] ~= nil then

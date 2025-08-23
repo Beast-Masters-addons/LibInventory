@@ -8,11 +8,11 @@ local lib = _G['LibInventoryAce']:NewModule('LibInventorySkills', 'AceEvent-3.0'
 local professions = _G.LibStub('LibProfessions-0')
 local profession = professions.currentProfession
 ---@type BMUtilsTable
-local table_utils = _G.LibStub('BM-utils-2'):GetModule('BMUtilsTable')
+local table_utils = _G.LibStub('BMUtilsTable')
 ---@type BMUtilsBasic
-local basic =  _G.LibStub('BM-utils-2'):GetModule('BMUtilsBasic')
+local basic =  _G.LibStub('BMUtilsBasic')
 ---@type BMUtilsText
-local text_utils =  _G.LibStub('BM-utils-2'):GetModule('BMUtilsText')
+local text_utils =  _G.LibStub('BMUtilsText')
 
 function lib:OnInitialize()
     self.db = addon.db:RegisterNamespace('Skills')
