@@ -32,12 +32,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Get build utils
-        uses: actions/checkout@v4
-        with:
-          repository: Beast-Masters-addons/build_utils
-          path: tests/build_utils
-
       - name: Install lua dependencies
         run: |
           sudo apt-get update

@@ -1,4 +1,4 @@
-loadfile('build_utils/utils/load_toc.lua')('./test.toc')
+loadfile('../build/build_utils/utils/load_toc.lua')('./test.toc')
 ---@type LibInventoryAce
 local addon = _G.LibStub('AceAddon-3.0'):GetAddon('LibInventoryAce')
 

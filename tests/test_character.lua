@@ -1,7 +1,6 @@
 local lu = require('luaunit')
-loadfile('build_utils/wow_api/functions.lua')()
---loadfile('../libs/LibStub/LibStub.lua')()
-loadfile('build_utils/utils/load_toc.lua')('./test.toc')
+loadfile('../build/build_utils/wow_api/functions.lua')()
+loadfile('../build/build_utils/utils/load_toc.lua')('./test.toc')
 
 _G['LibInventoryDB'] = {}
 
