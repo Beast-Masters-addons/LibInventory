@@ -4,6 +4,7 @@ local num_slots = {
     [2] = 16,
     [3] = 16,
     [4] = 18,
+    [5] = 0,
 }
 
 local namespace = true
