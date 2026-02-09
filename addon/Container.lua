@@ -129,16 +129,27 @@ end
 function lib:scanBags()
     inventory:clearLocation('bags')
     self:scanContainers(0, 4, 'bags')
+    if _G.Enum.BagIndex.ReagentBag ~= nil then
+        self:scanContainers(_G.Enum.BagIndex.ReagentBag, _G.Enum.BagIndex.ReagentBag, 'bags')
+    end
 end
 
 function lib:scanBank()
     inventory:clearLocation('bank')
     --First bank bag slot is last character bag slot +1
-    self:scanContainers(_G.NUM_BAG_SLOTS + 1, _G.NUM_BANKBAGSLOTS + _G.NUM_BAG_SLOTS, 'bank')
-    self:scanContainers(_G.BANK_CONTAINER, _G.BANK_CONTAINER, 'bank')
 
-    if _G['REAGENTBANK_CONTAINER'] ~= nil then
+    if _G.Constants.InventoryConstants.NumBankBagSlots ~= nil then
+        --Classic bank with bag slots
+        self:scanContainers(_G.Constants.InventoryConstants.NumBagSlots + 1, _G.Constants.InventoryConstants.NumBankBagSlots + _G.Constants.InventoryConstants.NumBagSlots, 'bank')
+        self:scanContainers(_G.Enum.BagIndex.Bank, _G.Enum.BagIndex.Bank, 'bank')
+    else
+        --Tabbed bank
+        self:scanContainers(_G.Enum.BagIndex.CharacterBankTab_1, _G.Enum.BagIndex.CharacterBankTab_6, 'bank') --Character bank
+        self:scanContainers(_G.Enum.BagIndex.AccountBankTab_1, _G.Enum.BagIndex.AccountBankTab_5, 'bank') --Warband bank
+    end
+
+    if _G.Enum.BagIndex.Reagentbank ~= nil then
         inventory:clearLocation('reagentBank')
-        self:scanContainers(_G['REAGENTBANK_CONTAINER'], _G['REAGENTBANK_CONTAINER'], 'reagentBank')
+        self:scanContainers(_G.Enum.BagIndex.Reagentbank, _G.Enum.BagIndex.Reagentbank, 'reagentBank')
     end
 end
