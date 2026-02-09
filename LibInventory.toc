@@ -3,6 +3,17 @@
 ## Author: datagutten
 ## Title: Lib: Inventory
 ## Notes: Find items in bags, bank and mail and send them as mail attachments
+## Category: Inventory
+## Category-deDE: Inventar
+## Category-esES: Inventario
+## Category-esMX: Inventario
+## Category-frFR: Inventaire
+## Category-itIT: Inventario
+## Category-koKR: 소지품
+## Category-ptBR: Inventário
+## Category-ruRU: Инвентарь
+## Category-zhCN: 物品栏
+## Category-zhTW: 物品欄
 ## X-Curse-Project-ID: 344823
 ## X-Wago-ID: xZKxl3Kk
 ## OptionalDeps: LibStub, BM-utils, LibProfessions
