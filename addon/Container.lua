@@ -140,12 +140,15 @@ function lib:scanBank()
 
     if _G.Constants.InventoryConstants.NumBankBagSlots ~= nil then
         --Classic bank with bag slots
-        self:scanContainers(_G.Constants.InventoryConstants.NumBagSlots + 1, _G.Constants.InventoryConstants.NumBankBagSlots + _G.Constants.InventoryConstants.NumBagSlots, 'bank')
+        self:scanContainers(
+                _G.Constants.InventoryConstants.NumBagSlots + 1,
+                _G.Constants.InventoryConstants.NumBankBagSlots + _G.Constants.InventoryConstants.NumBagSlots,
+                'bank')
         self:scanContainers(_G.Enum.BagIndex.Bank, _G.Enum.BagIndex.Bank, 'bank')
     else
         --Tabbed bank
-        self:scanContainers(_G.Enum.BagIndex.CharacterBankTab_1, _G.Enum.BagIndex.CharacterBankTab_6, 'bank') --Character bank
-        self:scanContainers(_G.Enum.BagIndex.AccountBankTab_1, _G.Enum.BagIndex.AccountBankTab_5, 'bank') --Warband bank
+        self:scanContainers(_G.Enum.BagIndex.CharacterBankTab_1, _G.Enum.BagIndex.CharacterBankTab_6, 'bank')
+        self:scanContainers(_G.Enum.BagIndex.AccountBankTab_1, _G.Enum.BagIndex.AccountBankTab_5, 'bank')
     end
 
     if _G.Enum.BagIndex.Reagentbank ~= nil then
